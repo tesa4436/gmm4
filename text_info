@@ -1,0 +1,58 @@
+Fine-tuning text-to-image models
+
+
+Abstract
+
+In this paper we analyze the performance of fine-tuned text-to-image models, specifically the StableDiffusion and DALL-E, using a Pokemon dataset (lambdalabs/pokemon-blip-captions). The primary focus of this team project is to thoroughly analyze the performance of these models and assess their ability to be fine-tuned effectively with the same dataset and parameters, particularly in generating images based on textual descriptions. By utilizing pre-trained models on the selected dataset, we compare the results and delve into the field of fine-tuning text-to-image models.
+
+Index Terms—Fine-tuning, Text-to-image models, StableDiffusion, DALL-E.
+
+Introduction
+
+Text-to-image synthesis has gained significant attention in recent years due to its potential applications in various domains such as computer vision, creative arts, and multimedia content generation. The ability to generate realistic images from textual descriptions opens up new possibilities for content creation, storytelling, and even assisting individuals with limited artistic skills to visualize their ideas. In this paper, we delve into the realm of fine-tuning text-to-image models, focusing on the StableDiffusion and <insert model>, using the Pokemon dataset (lambdalabs/pokemon-blip-captions). Our objective is to explore the effectiveness of fine-tuning these models with the same dataset and parameters, aiming to enhance their capability to generate visually coherent and accurate images. Through a comprehensive analysis of the performance and results, we aim to provide insights into the potential of fine-tuning text-to-image models and contribute to the advancement of this exciting field.
+
+
+Fine-tuning
+
+Fine-tuning text-to-image models involves the process of adapting pre-trained models, originally trained on a large dataset, to generate visually coherent and accurate images based on textual descriptions. By fine-tuning these models with a specific dataset and parameters, we aim to enhance their ability to generate images that align with the given textual input. Fine-tuning leverages the pre-existing knowledge and learned features of the models, allowing them to specialize and generate more contextually relevant images in response to textual prompts. This process facilitates the transfer of knowledge from the pre-trained models to the target task, enabling improved performance and generating visually compelling images that effectively capture the essence of the provided textual descriptions.
+
+
+Parameters
+
+For fine-tuning both the StableDiffusion and <insert model> text-to-image models, we employed a consistent set of parameters. The following list provides a brief explanation of each parameter:
+
+- Dataset name: "lambdalabs/pokemon-blip-captions" - a dataset containing used for training that contains Pokemon-related image-caption pairs.
+- Use_ema: true - Enables the use of Exponential Moving Average (EMA) during training, which can stabilize the model's performance.
+- Resolution: 512 - sets the resolution of the generated images to 512x512 pixels, ensuring a consistent output size.
+- Center_crop: true - Applies center cropping to the input images, focusing on the central region for training.
+- Random_flip: true - Randomly flips the images horizontally, introducing additional diversity during training.
+- Train_batch_size: 4 - Specifies the batch size for training, determining the number of samples processed in each training iteration.
+- Gradient_accumulation_steps: 4 - accumulates gradients over multiple steps, effectively increasing the effective batch size and - allowing for more stable training.
+- Gradient_checkpointing: true - saving memory by trading off computational efficiency for memory consumption during backpropagation.
+- Max_train_steps: 100 - limits the maximum number of training steps to 100, controlling the duration of the training process.
+- Learning_rate: 1e-05 - sets the initial learning, governing the step size for adjusting the model's parameters during training.
+- Max_grad_norm: 1 - Specifies the maximum gradient norm value, which is used for gradient clipping to prevent exploding gradients.
+- LR_scheduler: Constant - sets the learning rate scheduler to "constant," indicating a fixed learning rate throughout the training process.
+
+By utilizing these parameters consistently for both models, we aim to ensure a fair comparison and evaluate the effectiveness of fine-tuning in generating images based on textual descriptions from the chosen Pokemon dataset.
+
+
+Models used
+
+In our exploration of fine-tuning text-to-image models, we focus on two prominent models: StableDiffusion and DALL-E. These models have garnered considerable attention for their impressive capabilities in generating visually coherent and contextually relevant images based on textual descriptions. By examining the potential of fine-tuning these models using our chosen dataset, we aim to assess their effectiveness in generating realistic and compelling images that align with the given textual prompts.
+
+
+Architecture comparison:
+
+These models, despite sharing the objective of generating images from textual descriptions, employ different architectural approaches to accomplish this task.
+
+StableDiffusion:
+
+	StableDiffusion incorporates a diffusion model combined with deep generative networks. The architecture of StableDiffusion involves a series of diffusion steps, where an initial noise image is gradually transformed into a visually coherent output guided by the given text. Each diffusion step refines the image by iteratively conditioning on the textual description and progressively adjusting the noise image. This process allows StableDiffusion to capture fine details and global coherence, resulting in realistic and contextually relevant images. The diffusion model within StableDiffusion enables precise control over the image generation process, offering flexibility in manipulating various image attributes.
+
+DALL-E:
+	DALL-E employs a distinctive architecture based on a combination of autoregressive transformers and variational autoencoders. The model utilizes a pretrained encoder network to map the textual descriptions into a latent space representation. This latent representation is then decoded by an autoregressive transformer, generating the corresponding image. DALL-E's transformer architecture enables capturing long-range dependencies in the text and effectively translating them into coherent visual content. The variational autoencoder component of DALL-E allows for the generation of diverse images by sampling from the learned latent space, resulting in creative and novel outputs.
+
+While both StableDiffusion and DALL-E excel in generating images from text, their architectural differences contribute to variations in their performance, interpretability, and the types of images they generate. StableDiffusion's diffusion-based architecture emphasizes fine-grained control and capturing detailed attributes, while DALL-E's transformer-based architecture emphasizes capturing complex relationships between text and images, resulting in diverse and imaginative outputs.
+
+[Butu gerai imesti abieju modeliu architekturu nuotraukas]
