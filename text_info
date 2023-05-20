@@ -19,21 +19,31 @@ Fine-tuning text-to-image models involves the process of adapting pre-trained mo
 
 Parameters
 
-For fine-tuning both the StableDiffusion and <insert model> text-to-image models, we employed a consistent set of parameters. The following list provides a brief explanation of each parameter:
+For fine-tuning both StableDiffusion and LoRa, we employed a consistent set of parameters with a few small differences. The following list provides a brief explanation of each parameter:
 
-- Dataset name: "lambdalabs/pokemon-blip-captions" - a dataset containing used for training that contains Pokemon-related image-caption pairs.
-- Use_ema: true - Enables the use of Exponential Moving Average (EMA) during training, which can stabilize the model's performance.
-- Resolution: 512 - sets the resolution of the generated images to 512x512 pixels, ensuring a consistent output size.
-- Center_crop: true - Applies center cropping to the input images, focusing on the central region for training.
-- Random_flip: true - Randomly flips the images horizontally, introducing additional diversity during training.
-- Train_batch_size: 4 - Specifies the batch size for training, determining the number of samples processed in each training iteration.
+Same parameters:
+- Dataset name: "lambdalabs/pokemon-blip-captions" - a dataset containing Pokemon-related image-caption pairs.
+- Resolution: 512 - sets the resolution of the generated images to 512x512 pixels.
+- Center_crop: true - Applies center cropping to the input images.
+- Random_flip: true - Randomly flips the images horizontally.
 - Gradient_accumulation_steps: 4 - accumulates gradients over multiple steps, effectively increasing the effective batch size and - allowing for more stable training.
-- Gradient_checkpointing: true - saving memory by trading off computational efficiency for memory consumption during backpropagation.
-- Max_train_steps: 100 - limits the maximum number of training steps to 100, controlling the duration of the training process.
-- Learning_rate: 1e-05 - sets the initial learning, governing the step size for adjusting the model's parameters during training.
-- Max_grad_norm: 1 - Specifies the maximum gradient norm value, which is used for gradient clipping to prevent exploding gradients.
-- LR_scheduler: Constant - sets the learning rate scheduler to "constant," indicating a fixed learning rate throughout the training process.
+- Max_train_steps: 100 - limits the maximum number of training steps to 100.
+- Learning_rate: 1e-05 - sets the initial learning rate, governing the step size for adjusting the model's parameters during training.
+- Number of examples: 833 - Number of images in our dataset.
+- Number of epochs: 2 - Complete passes over our dataset
+- Total train batch size: 16 - Examples that are processed in parallel during each training iteration
+- Device: Cuda 
+- Mixed precision type: No - We are using single-precision (32-bit) floating-point numbers
 
+
+Differences:
+	In SD:
+		- LR_scheduler: Constant - sets the learning rate scheduler to "constant," indicating a fixed learning rate throughout the training process.
+		- Use_ema: true - Enables the use of Exponential Moving Average (EMA) during training, which can stabilize the model's performance.
+
+	In Lora:
+		- LR_scheduler: Cosine - sets the learning rate scheduler to "cosine" - gradually decreases the learning rate in a cosine-like manner over the course of training.
+		
 By utilizing these parameters consistently for both models, we aim to ensure a fair comparison and evaluate the effectiveness of fine-tuning in generating images based on textual descriptions from the chosen Pokemon dataset.
 
 
@@ -55,4 +65,15 @@ DALL-E:
 
 While both StableDiffusion and DALL-E excel in generating images from text, their architectural differences contribute to variations in their performance, interpretability, and the types of images they generate. StableDiffusion's diffusion-based architecture emphasizes fine-grained control and capturing detailed attributes, while DALL-E's transformer-based architecture emphasizes capturing complex relationships between text and images, resulting in diverse and imaginative outputs.
 
-[Butu gerai imesti abieju modeliu architekturu nuotraukas]
+Results:
+
+unet 3.3G
+vae 320M
+
+lora 3.2M
+
+
+training SD ~15min
+generating with SD ~50s
+training lora ~8min
+generating with lora ~20s
