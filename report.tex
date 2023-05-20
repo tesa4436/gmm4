@@ -36,7 +36,7 @@ Text-to-image synthesis has gained significant attention in recent years due to 
 The dataset used in this paper \cite{pinkney2022pokemon} consists of 838 image-description pairs of Pokémons. The description for each Pokémon was generated with the Bootstrapping Language-Image Pre-training (BLIP) framework, which means that the descriptions may not be perfect and may have some inaccuracies. However, for our purposes this should not be a big hindrance.
 
 \section{Model used}
-For this paper we used Stable Diffusion, following the guidelines in \cite{patil2022stable} in order to get it running.
+For this paper we used Stable Diffusion, following the guidelines in \cite{patil2022stable} in order to get it running. The model is based on a type of a diffusion model, which is called Latent Diffusion, which is proposed and explored in \cite{diffus}. The basic principle of such machine learning models is that they employ a step-by-step denoising of random Gaussian noise to create images.
 
 \begin{figure}
 \centerline{\includegraphics[scale=1.8]{diff.png}}
