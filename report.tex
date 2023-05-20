@@ -16,7 +16,7 @@
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 
 \usepackage[labelsep=endash]{caption}
-\renewcommand{\figurename}{pav}
+\renewcommand{\figurename}{Figure}
 \begin{document}
 \title{Translation of text to images}
 \author{\IEEEauthorblockN{Teodoras Šaulys}
@@ -43,6 +43,17 @@ fine-tuning, text-to-image, diffusion models, large language models, weight free
 
 \section{Introduction}
 Text-to-image synthesis has gained significant attention in recent years due to its potential applications in various domains such as computer vision, creative arts, and multimedia content generation. The ability to generate realistic images from textual descriptions opens up new possibilities for content creation, storytelling, and even assisting individuals with limited artistic skills to visualize their ideas. In this paper, we delve into the realm of fine-tuning text-to-image models, focusing on Stable Diffusion, using the Pokemon dataset \cite{pinkney2022pokemon}. Our objective is to explore the effectiveness of fine-tuning Stable Diffusion with the same dataset and parameters, but with different fine-tuning techniques. We are aiming to enhance the model's capability to generate visually coherent and accurate images. Through a comprehensive analysis of the performance and results, we aim to provide insights into the potential of fine-tuning text-to-image models and contribute to the advancement of this exciting field.
+
+\section{Dataset}
+The dataset used in this paper \cite{pinkney2022pokemon} consists of 838 image-description pairs of Pokémons. The description for each Pokémon was generated with the Bootstrapping Language-Image Pre-training framework, which means that the descriptions may not be perfect and may have some inaccuracies. However, for our purposes this should not be a big hindrance.
+
+\section{Model used}
+
+\begin{figure}
+\centerline{\includegraphics[scale=1.8]{diff.png}}
+\caption{Inner workings of Stable Diffusion}
+\label{fig}
+\end{figure}
 
 \section{Methods}
 
@@ -75,6 +86,8 @@ Low-Rank adaptation of large language models was proposed by researchers from Mi
 \item Computing resources required for this approach are more modest
 \end{itemize}
 
+Above mentioned points greatly increase availability to fine-tuning Stable Diffusion to a wider population of users which may not have the bleeding-edge hardware.
+
 \begin{equation}
 \mathcal{L}({\bf X}, {\bf Y}) = \frac{1}{w \cdot h} \sum_{i=1}^h \sum_{j=1}^w (X_{i, j} - Y_{i, j})^2
 \label{eq:lygtis1}
@@ -91,8 +104,6 @@ f & = f_1(f_2(x))
 Taikytas modelis ~\eqref{eq:lygtis2}.
 
 
-\section{Duomenys}
-Aprašote naudojamus duomenis.
 
 \subsection{Equations}
 
@@ -100,11 +111,7 @@ Aprašote naudojamus duomenis.
 
 \subsection{Paveikslėliai ir lentelės}
 
-\begin{figure}[!h] % įterpti čia
-\centerline{\includegraphics[scale=1.8]{diff.png}}
-\caption{Inner workings of Stable Diffusion}
-\label{fig}
-\end{figure}
+
 
 %\begin{table}[htbp]
 %\caption{Lentelės aprašas}
@@ -119,14 +126,6 @@ Aprašote naudojamus duomenis.
 %\end{table}
 
 \section{Results}
-
-\begin{figure*}[ht] % puslapio viršuje
-\centerline{\includegraphics{fig1.png}}
-\caption{Paveikslėlio aprašas.}
-\label{fig}
-\end{figure*}
-
-Cituojame šaltinį \cite{lecun2015deep}, \cite{desai2021redcaps}.
 
 %\bibliographystyle{plain}
 %\bibliography{saltiniai}
