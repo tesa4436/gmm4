@@ -36,12 +36,24 @@ Text-to-image synthesis has gained significant attention in recent years due to 
 The dataset used in this paper \cite{pinkney2022pokemon} consists of 838 image-description pairs of Pokémons. The description for each Pokémon was generated with the Bootstrapping Language-Image Pre-training (BLIP) framework, which means that the descriptions may not be perfect and may have some inaccuracies. However, for our purposes this should not be a big hindrance.
 
 \section{Model used}
-For this paper we used Stable Diffusion, following the guidelines in \cite{patil2022stable} in order to get it running. The model is based on a type of a diffusion model, which is called Latent Diffusion, which is proposed and explored in \cite{diffus}. The basic principle of such machine learning models is that they employ a step-by-step denoising of random Gaussian noise to create images.
+For this paper we used Stable Diffusion, following the guidelines in \cite{patil2022stable} in order to get it running. The model is based on a type of a diffusion model, which is called Latent Diffusion, which is proposed and explored in \cite{diffus}. The basic principle of such machine learning models is that they employ a step-by-step denoising of random Gaussian noise to create images. Stable Diffusion consists of three main parts:
+\begin{itemize}
+\item Variational Auto Encoder (VAE)
+\item U-Net
+\item Text encoder, such as before mentioned CLIP
+\end{itemize}
+The VAE takes care of encoding and decoding of images. In the beginning of image generation, the VAE encodes the image into a low dimensional latent representation, which is fed as input to the U-Net. After denoising the latent representation, the VAE decoder converts this representation back into a image, which becomes the final output. The U-Net also consists of an encoder and decoder, both of which are constructed with ResNet blocks. This part of the model downsamples the image representation for a few steps in order to minimise expensive computations. After that, the decoder upsamples the representation back to the original size with denoising applied. In fig. \ref{fig2} we can see the different steps in the noising and de-noising processs.
 
 \begin{figure}
 \centerline{\includegraphics[scale=1.8]{diff.png}}
 \caption{Inner workings of Stable Diffusion}
-\label{fig}
+\label{fig1}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[scale=0.1]{diff2.png}}
+\caption{Noising and de-noising process in Stable Diffusion}
+\label{fig2}
 \end{figure}
 
 \section{Methods}
