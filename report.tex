@@ -16,7 +16,7 @@
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 
 \usepackage[labelsep=endash]{caption}
-\renewcommand{\figurename}{Figure} \begin{document} \title{Translation of text to images} \author{\IEEEauthorblockN{Teodoras Šaulys} \IEEEauthorblockA{\textit{Institute of informatics} \\ \textit{Faculty of mathematics and informatics}\\ Vilnius, Lithuania \\ teodoras.saulys@mif.stud.vu.lt} \and \IEEEauthorblockN{Povilas Slivinskas} \IEEEauthorblockA{\textit{Institute of informatics} \\ \textit{Faculty of mathematics and informatics}\\ Vilnius, Lithuania \\
+\renewcommand{\figurename}{Figure} \begin{document} \title{Translation of Text to Images} \author{\IEEEauthorblockN{Teodoras Šaulys} \IEEEauthorblockA{\textit{Institute of Informatics} \\ \textit{Faculty of Mathematics and Informatics}\\ Vilnius, Lithuania \\ teodoras.saulys@mif.stud.vu.lt} \and \IEEEauthorblockN{Povilas Slivinskas} \IEEEauthorblockA{\textit{Institute of Informatics} \\ \textit{Faculty of Mathematics and Informatics}\\ Vilnius, Lithuania \\
 povilas.slivinskas@mif.stud.vu.lt}
 }
 \maketitle
@@ -36,13 +36,13 @@ Text-to-image synthesis has gained significant attention in recent years due to 
 The dataset used in this paper \cite{pinkney2022pokemon} consists of 838 image-description pairs of Pokémons. The description for each Pokémon was generated with the Bootstrapping Language-Image Pre-training (BLIP) framework, which means that the descriptions may not be perfect and may have some inaccuracies. However, for our purposes this should not be a big hindrance.
 
 \section{Model used}
-For this paper we used Stable Diffusion, following the guidelines in \cite{patil2022stable} in order to get it running. The model is based on a type of a diffusion model, which is called Latent Diffusion, which is proposed and explored in \cite{diffus}. The basic principle of such machine learning models is that they employ a step-by-step denoising of random Gaussian noise to create images. Stable Diffusion consists of three main parts:
+For this paper we used Stable Diffusion, following the guidelines in \cite{patil2022stable} in order to get it running. The model is based on a type of a diffusion model, which is called Latent Diffusion, which is proposed and explored in \cite{diffus}. Fig. \ref{fig1} contains a diagram of the internals of Stable Diffusion. The basic principle of such machine learning models is that they employ a step-by-step denoising of random Gaussian noise to create images. Stable Diffusion consists of three main parts:
 \begin{itemize}
 \item Variational Auto Encoder (VAE)
 \item U-Net
 \item Text encoder, such as before mentioned CLIP
 \end{itemize}
-The VAE takes care of encoding and decoding of images. In the beginning of image generation, the VAE encodes the image into a low dimensional latent representation, which is fed as input to the U-Net. After denoising the latent representation, the VAE decoder converts this representation back into a image, which becomes the final output. The U-Net also consists of an encoder and decoder, both of which are constructed with ResNet blocks. This part of the model downsamples the image representation for a few steps in order to minimise expensive computations. After that, the decoder upsamples the representation back to the original size with denoising applied. One problem which arises during this process is that we obviously lose information during downsampling. To solve this problem, the downsampling blocks are connected to the upsampling blocks with short-cut connections. Also, cross-attention layers are included in both encoder and decoder of the U-Net, which will become important later in our paper. In fig. \ref{fig2} we can see the different steps in the noising and de-noising process.
+The VAE takes care of encoding and decoding of images. In the beginning of image generation, the VAE encodes the image into a low dimensional latent representation, which is fed as input to the U-Net. After denoising the latent representation, the VAE decoder converts this representation back into a image, which becomes the final output. The U-Net also consists of an encoder and decoder, both of which are constructed with ResNet blocks. This part of the model downsamples the image representation for a few steps in order to minimise expensive computations. In figure \ref{fig3} we can see how this down and upsampling occurs. After downsampling, the decoder upsamples the representation back to the original size with denoising applied. One problem which arises during this process is that we obviously lose information during downsampling. To solve this problem, the downsampling blocks are connected to the upsampling blocks with short-cut connections. Also, cross-attention layers are included in both encoder and decoder of the U-Net, which will become important later in our paper. In fig. \ref{fig2} we can see the different steps in the noising and de-noising process. In addition, the process of de-noising is executed in a loop for a certain number of times, and the noise from the latent representation is removed gradually for each step.
 
 \begin{figure}
 \centerline{\includegraphics[scale=1.8]{diff.png}}
@@ -54,6 +54,12 @@ The VAE takes care of encoding and decoding of images. In the beginning of image
 \centerline{\includegraphics[scale=0.1]{diff2.png}}
 \caption{Noising and de-noising process in Stable Diffusion}
 \label{fig2}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[scale=0.55]{unet.jpg}}
+\caption{The U-Net architecture}
+\label{fig3}
 \end{figure}
 
 \section{Methods}
@@ -87,7 +93,7 @@ Low-Rank adaptation of large language models was proposed by researchers from Mi
 \item Computing resources required for this approach are more modest
 \end{itemize}
 
-Above mentioned points greatly increase availability to fine-tuning Stable Diffusion to a wider population of users which may not have the bleeding-edge hardware.
+Above mentioned points greatly increase availability to fine-tuning Stable Diffusion to a wider population of users which may not have the bleeding-edge hardware. Following the guidelines in \cite{lorablog}, we attempted to fine-tune Stable Diffusion in this fashion.
 
 %\begin{equation}
 %\mathcal{L}({\bf X}, {\bf Y}) = \frac{1}{w \cdot h} \sum_{i=1}^h \sum_{j=1}^w (X_{i, j} - Y_{i, j})^2
