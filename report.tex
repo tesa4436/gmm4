@@ -20,36 +20,36 @@
 \begin{document}
 \title{Translation of text to images}
 \author{\IEEEauthorblockN{Teodoras Šaulys}
-\IEEEauthorblockA{\textit{Informatikos institutas} \\
-\textit{Matematikos if informatikos fakultetas}\\
-Vilnius, Lietuva \\
+\IEEEauthorblockA{\textit{Institute of informatics} \\
+\textit{Faculty of mathematics and informatics}\\
+Vilnius, Lithuania \\
 teodoras.saulys@mif.stud.vu.lt}
 \and
 \IEEEauthorblockN{Povilas Slivinskas}
-\IEEEauthorblockA{\textit{Informatikos institutas} \\
-\textit{Matematikos if informatikos fakultetas}\\
-Vilnius, Lietuva \\
+\IEEEauthorblockA{\textit{Institute of informatics} \\
+\textit{Faculty of mathematics and informatics}\\
+Vilnius, Lithuania \\
 povilas.slivinskas@mif.stud.vu.lt}
 }
 \maketitle
 
 \begin{abstract}
-In this paper we analyze the performance of fine-tuned text-to-image models, specifically the StableDiffusion and DALL-E, using a Pokemon dataset (lambdalabs/pokemon-blip-captions). The primary focus of this team project is to thoroughly analyze the performance of these models and assess their ability to be fine-tuned effectively with the same dataset and parameters, particularly in generating images based on textual descriptions. By utilizing pre-trained models on the selected dataset, we compare the results and delve into the field of fine-tuning text-to-image models.
+In this paper we analyze the performance of Stable Diffusion, fine-tuned using different techiques using a Pokemon dataset \cite{pinkney2022pokemon}. The primary focus of this team project is to thoroughly analyze the performance of Stable Diffusion and assess its ability to be fine-tuned effectively with the same dataset and parameters, particularly in generating images based on textual descriptions. By utilizing pre-trained model on the selected dataset, we compare the results and delve into the field of fine-tuning text-to-image models.
 \end{abstract}
 
 \begin{IEEEkeywords}
-5-6 Raktiniai žodžiai
+fine-tuning, text-to-image, diffusion models, large language models, weight freezing
 \end{IEEEkeywords}
 
 \section{Introduction}
-Text-to-image synthesis has gained significant attention in recent years due to its potential applications in various domains such as computer vision, creative arts, and multimedia content generation. The ability to generate realistic images from textual descriptions opens up new possibilities for content creation, storytelling, and even assisting individuals with limited artistic skills to visualize their ideas. In this paper, we delve into the realm of fine-tuning text-to-image models, focusing on the StableDiffusion and <insert model>, using the Pokemon dataset (lambdalabs/pokemon-blip-captions). Our objective is to explore the effectiveness of fine-tuning these models with the same dataset and parameters, aiming to enhance their capability to generate visually coherent and accurate images. Through a comprehensive analysis of the performance and results, we aim to provide insights into the potential of fine-tuning text-to-image models and contribute to the advancement of this exciting field.
+Text-to-image synthesis has gained significant attention in recent years due to its potential applications in various domains such as computer vision, creative arts, and multimedia content generation. The ability to generate realistic images from textual descriptions opens up new possibilities for content creation, storytelling, and even assisting individuals with limited artistic skills to visualize their ideas. In this paper, we delve into the realm of fine-tuning text-to-image models, focusing on Stable Diffusion, using the Pokemon dataset \cite{pinkney2022pokemon}. Our objective is to explore the effectiveness of fine-tuning Stable Diffusion with the same dataset and parameters, but with different fine-tuning techniques. We are aiming to enhance the model's capability to generate visually coherent and accurate images. Through a comprehensive analysis of the performance and results, we aim to provide insights into the potential of fine-tuning text-to-image models and contribute to the advancement of this exciting field.
 
 \section{Methods}
 
 \subsection{Fine-tuning}
 Fine-tuning text-to-image models involves the process of adapting pre-trained models, originally trained on a large dataset, to generate visually coherent and accurate images based on textual descriptions. By fine-tuning these models with a specific dataset and parameters, we aim to enhance their ability to generate images that align with the given textual input. Fine-tuning leverages the pre-existing knowledge and learned features of the models, allowing them to specialize and generate more contextually relevant images in response to textual prompts. This process facilitates the transfer of knowledge from the pre-trained models to the target task, enabling improved performance and generating visually compelling images that effectively capture the essence of the provided textual descriptions.
 
-\subsubsection{Fine-tuning parameters}
+\subsection{Fine-tuning parameters}
 For fine-tuning both the StableDiffusion and <insert model> text-to-image models, we employed a consistent set of parameters. The following list provides a brief explanation of each parameter:\begin{itemize}
 \item{Dataset name: lambdalabs/pokemon-blip-captions - a dataset containing used for training that contains Pokemon-related image-caption pairs.}
 \item{Use\_ema: true - Enables the use of Exponential Moving Average (EMA) during training, which can stabilize the model's performance.}
@@ -68,6 +68,12 @@ For fine-tuning both the StableDiffusion and <insert model> text-to-image models
 By utilizing these parameters consistently for both models, we aim to ensure a fair comparison and evaluate the effectiveness of fine-tuning in generating images based on textual descriptions from the chosen Pokemon dataset.
 
 \subsection{Low-Rank Adaptation of Large Language Models (LoRA)}
+Low-Rank adaptation of large language models was proposed by researchers from Microsoft as a viable fine-tuning technique for large language models \cite{hu2021lora}. The main problem of fine-tuning such models with numerous parameters is that it is often expensive and time-consuming, because all of the parameters are involved during fine-tuning. Instead an alternative is proposed, which consists of freezing the pre-trained weights and injecting trainable rank decomposition matrices into transformer's layers. As a result, instead of training the model's weights, the weights of the injected layers are trained. Originally LoRA was intended for large language models, nevertheless it is applicable to diffusion models, in our specific case Stable Diffusion. In our instance, LoRA can be used in the cross-attention layers, which are involved in mapping image representations with the given prompts. The main advantages of such fine-tuning approach are as follows:
+\begin{itemize}
+\item Significantly faster training
+\item The resulting weights are much smaller
+\item Computing resources required for this approach are more modest
+\end{itemize}
 
 \begin{equation}
 \mathcal{L}({\bf X}, {\bf Y}) = \frac{1}{w \cdot h} \sum_{i=1}^h \sum_{j=1}^w (X_{i, j} - Y_{i, j})^2
@@ -94,28 +100,23 @@ Aprašote naudojamus duomenis.
 
 \subsection{Paveikslėliai ir lentelės}
 
-Paveikslėlį cituojame ``~\ref{fig} pav.''.
-
-Paveikslėlį cituojame ``~\ref{tab1} lentelė''.
-
-\begin{table}[htbp]
-\caption{Lentelės aprašas}
-\begin{center}
-\begin{tabular}{|c|c|c|c|}
-\hline
-a & b & c &  d \\
-\hline
-\end{tabular}
-\label{tab1}
-\end{center}
-\end{table}
-
 \begin{figure}[!h] % įterpti čia
-\centerline{\includegraphics{fig1.png}}
-\caption{Paveikslėlio aprašas.}
+\centerline{\includegraphics[scale=1.8]{diff.png}}
+\caption{Inner workings of Stable Diffusion}
 \label{fig}
 \end{figure}
 
+%\begin{table}[htbp]
+%\caption{Lentelės aprašas}
+%\begin{center}
+%\begin{tabular}{|c|c|c|c|}
+%\hline
+%a & b & c &  d \\
+%\hline
+%\end{tabular}
+%\label{tab1}
+%\end{center}
+%\end{table}
 
 \section{Results}
 
