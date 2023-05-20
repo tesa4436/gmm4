@@ -1,7 +1,7 @@
 \documentclass[conference]{IEEEtran}
 \IEEEoverridecommandlockouts
 \usepackage[utf8]{inputenc}
-%\usepackage[lithuanian]{babel}
+%\usepackage[english]{babel}
 \usepackage[T1]{fontenc}
 % The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
 %\usepackage{cite}
@@ -18,7 +18,7 @@
 \usepackage[labelsep=endash]{caption}
 \renewcommand{\figurename}{pav}
 \begin{document}
-\title{Teksto transliavimas į vaizdą}
+\title{Translation of text to images}
 \author{\IEEEauthorblockN{Teodoras Šaulys}
 \IEEEauthorblockA{\textit{Informatikos institutas} \\
 \textit{Matematikos if informatikos fakultetas}\\
@@ -34,21 +34,40 @@ povilas.slivinskas@mif.stud.vu.lt}
 \maketitle
 
 \begin{abstract}
-Santrauka kokia problema spręsta. Ką taikėte, kokie rezultatai. 
+In this paper we analyze the performance of fine-tuned text-to-image models, specifically the StableDiffusion and DALL-E, using a Pokemon dataset (lambdalabs/pokemon-blip-captions). The primary focus of this team project is to thoroughly analyze the performance of these models and assess their ability to be fine-tuned effectively with the same dataset and parameters, particularly in generating images based on textual descriptions. By utilizing pre-trained models on the selected dataset, we compare the results and delve into the field of fine-tuning text-to-image models.
 \end{abstract}
 
 \begin{IEEEkeywords}
 5-6 Raktiniai žodžiai
 \end{IEEEkeywords}
 
-\section{Įvadas}
-Pristatote problemą
+\section{Introduction}
+Text-to-image synthesis has gained significant attention in recent years due to its potential applications in various domains such as computer vision, creative arts, and multimedia content generation. The ability to generate realistic images from textual descriptions opens up new possibilities for content creation, storytelling, and even assisting individuals with limited artistic skills to visualize their ideas. In this paper, we delve into the realm of fine-tuning text-to-image models, focusing on the StableDiffusion and <insert model>, using the Pokemon dataset (lambdalabs/pokemon-blip-captions). Our objective is to explore the effectiveness of fine-tuning these models with the same dataset and parameters, aiming to enhance their capability to generate visually coherent and accurate images. Through a comprehensive analysis of the performance and results, we aim to provide insights into the potential of fine-tuning text-to-image models and contribute to the advancement of this exciting field.
 
-\section{Metodai}
+\section{Methods}
 
-\subsection{Metodas A}
+\subsection{Fine-tuning}
+Fine-tuning text-to-image models involves the process of adapting pre-trained models, originally trained on a large dataset, to generate visually coherent and accurate images based on textual descriptions. By fine-tuning these models with a specific dataset and parameters, we aim to enhance their ability to generate images that align with the given textual input. Fine-tuning leverages the pre-existing knowledge and learned features of the models, allowing them to specialize and generate more contextually relevant images in response to textual prompts. This process facilitates the transfer of knowledge from the pre-trained models to the target task, enabling improved performance and generating visually compelling images that effectively capture the essence of the provided textual descriptions.
 
-Pristatote naudojamus metodus
+\subsubsection{Fine-tuning parameters}
+For fine-tuning both the StableDiffusion and <insert model> text-to-image models, we employed a consistent set of parameters. The following list provides a brief explanation of each parameter:\begin{itemize}
+\item{Dataset name: lambdalabs/pokemon-blip-captions - a dataset containing used for training that contains Pokemon-related image-caption pairs.}
+\item{Use\_ema: true - Enables the use of Exponential Moving Average (EMA) during training, which can stabilize the model's performance.}
+\item{Resolution: 512 - sets the resolution of the generated images to 512x512 pixels, ensuring a consistent output size.}
+\item{Center\_crop: true - Applies center cropping to the input images, focusing on the central region for training.}
+\item{Random\_flip: true - Randomly flips the images horizontally, introducing additional diversity during training.}
+\item{Train\_batch\_size: 4 - Specifies the batch size for training, determining the number of samples processed in each training iteration.}
+\item{Gradient\_accumulation\_steps: 4 - accumulates gradients over multiple steps, effectively increasing the effective batch size and - allowing for more stable training.}
+\item{Gradient\_checkpointing: true - saving memory by trading off computational efficiency for memory consumption during backpropagation.}
+\item{Max\_train\_steps: 100 - limits the maximum number of training steps to 100, controlling the duration of the training process.}
+\item{Learning\_rate: 1e-05 - sets the initial learning, governing the step size for adjusting the model's parameters during training.}
+\item{Max\_grad\_norm: 1 - Specifies the maximum gradient norm value, which is used for gradient clipping to prevent exploding gradients.}
+\item{LR\_scheduler: Constant - sets the learning rate scheduler to "constant," indicating a fixed learning rate throughout the training process.}
+\end{itemize}
+
+By utilizing these parameters consistently for both models, we aim to ensure a fair comparison and evaluate the effectiveness of fine-tuning in generating images based on textual descriptions from the chosen Pokemon dataset.
+
+\subsection{Low-Rank Adaptation of Large Language Models (LoRA)}
 
 \begin{equation}
 \mathcal{L}({\bf X}, {\bf Y}) = \frac{1}{w \cdot h} \sum_{i=1}^h \sum_{j=1}^w (X_{i, j} - Y_{i, j})^2
@@ -98,7 +117,7 @@ a & b & c &  d \\
 \end{figure}
 
 
-\section{Rezultatai}
+\section{Results}
 
 \begin{figure*}[ht] % puslapio viršuje
 \centerline{\includegraphics{fig1.png}}
