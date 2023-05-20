@@ -68,19 +68,30 @@ The VAE takes care of encoding and decoding of images. In the beginning of image
 Fine-tuning text-to-image models involves the process of adapting pre-trained models, originally trained on a large dataset, to generate visually coherent and accurate images based on textual descriptions. By fine-tuning these models with a specific dataset and parameters, we aim to enhance their ability to generate images that align with the given textual input. Fine-tuning leverages the pre-existing knowledge and learned features of the models, allowing them to specialize and generate more contextually relevant images in response to textual prompts. This process facilitates the transfer of knowledge from the pre-trained models to the target task, enabling improved performance and generating visually compelling images that effectively capture the essence of the provided textual descriptions.
 
 \subsection{Fine-tuning parameters}
-For fine-tuning both the StableDiffusion and <insert model> text-to-image models, we employed a consistent set of parameters. The following list provides a brief explanation of each parameter:\begin{itemize}
-\item{Dataset name: lambdalabs/pokemon-blip-captions - a dataset containing used for training that contains Pokemon-related image-caption pairs.}
-\item{Use\_ema: true - Enables the use of Exponential Moving Average (EMA) during training, which can stabilize the model's performance.}
-\item{Resolution: 512 - sets the resolution of the generated images to 512x512 pixels, ensuring a consistent output size.}
-\item{Center\_crop: true - Applies center cropping to the input images, focusing on the central region for training.}
-\item{Random\_flip: true - Randomly flips the images horizontally, introducing additional diversity during training.}
-\item{Train\_batch\_size: 4 - Specifies the batch size for training, determining the number of samples processed in each training iteration.}
-\item{Gradient\_accumulation\_steps: 4 - accumulates gradients over multiple steps, effectively increasing the effective batch size and - allowing for more stable training.}
-\item{Gradient\_checkpointing: true - saving memory by trading off computational efficiency for memory consumption during backpropagation.}
-\item{Max\_train\_steps: 100 - limits the maximum number of training steps to 100, controlling the duration of the training process.}
-\item{Learning\_rate: 1e-05 - sets the initial learning, governing the step size for adjusting the model's parameters during training.}
-\item{Max\_grad\_norm: 1 - Specifies the maximum gradient norm value, which is used for gradient clipping to prevent exploding gradients.}
-\item{LR\_scheduler: Constant - sets the learning rate scheduler to "constant," indicating a fixed learning rate throughout the training process.}
+For fine-tuning both the Stable Diffusion text-to-image model, we employed a consistent set of parameters both for regular and LoRA fine-tuning. The following list provides a brief explanation of each parameter:\begin{itemize}
+\item Dataset name: "lambdalabs/pokemon-blip-captions" - a dataset containing Pokemon-related image-caption pairs.
+\item Resolution: 512 - sets the resolution of the generated images to 512x512 pixels.
+\item Center\_crop: true - Applies center cropping to the input images.
+\item Random\_flip: true - Randomly flips the images horizontally.
+\item Gradient\_accumulation\_steps: 4 - accumulates gradients over multiple steps, effectively increasing the effective batch size and - allowing for more stable training.
+\item Max\_train\_steps: 100 - limits the maximum number of training steps to 100.
+\item Learning\_rate: 1e-05 - sets the initial learning rate, governing the step size for adjusting the model's parameters during training.
+\item Number of examples: 833 - Number of images in our dataset.
+\item Number of epochs: 2 - Complete passes over our dataset
+\item Total train batch size: 16 - Examples that are processed in parallel during each training iteration
+\item Device: Cuda
+\item Mixed precision type: No - We are using single-precision (32-bit) floating-point numbers
+\end{itemize}
+
+The main hyperparameter differences in regular fine-tuning:
+\begin{itemize}
+\item LR\_scheduler: Constant - sets the learning rate scheduler to "constant," indicating a fixed learning rate throughout the training process.
+\item Use\_ema: true - Enables the use of Exponential Moving Average (EMA) during training, which can stabilize the model's performance.
+\end{itemize}
+
+The main hyperparameter differences in LoRA fine-tuning:
+\begin{itemize}
+\item LR\_scheduler: Cosine - sets the learning rate scheduler to "cosine" - gradually decreases the learning rate in a cosine-like manner over the course of training.
 \end{itemize}
 
 By utilizing these parameters consistently for both models, we aim to ensure a fair comparison and evaluate the effectiveness of fine-tuning in generating images based on textual descriptions from the chosen Pokemon dataset.
@@ -127,6 +138,11 @@ Above mentioned points greatly increase availability to fine-tuning Stable Diffu
 %\end{table}
 
 \section{Results}
+Evaluating the results of text-to-image generation is inherently subjective, as the perception of image quality and relevance varies among individuals. However, while judging the generated images is subjective, we can objectively compare the results based on the sizes of generated models, the time it takes to train them, and the time it takes to generate images. These objective metrics provide valuable insights into the computational requirements and efficiency of the models, allowing for a comparative analysis of their performance.
+In the case of StableDiffusion (SD), the sizes of the weights for the utilized architectures are as follows: UNet with 3.3G and VAE with 320M. These weights indicate the model's complexity and the amount of information it needs to process during training and generation. Additionally, the training process for StableDiffusion takes approximately 15 minutes (using the parameters described above), while generating images with StableDiffusion requires around 50 seconds.
+On the other hand, for the LoRa model, the weights have a size of 3.2M, indicating a comparatively smaller model architecture. The training time for LoRa amounts to approximately 8 minutes, and the image generation time is reduced to around 20 seconds.
+These results provide insights into the computational requirements and efficiency of the models. StableDiffusion, with its larger weight sizes and longer training time, offers a higher level of complexity and potential for generating detailed and contextually coherent images. However, it comes at the cost of increased training and generation time. Conversely, the LoRa model, with its smaller weight size and shorter training and generation times, provides a more efficient solution while still delivering satisfactory image generation results.
+These results showcase the trade-offs between model complexity, training time, and generation speed, highlighting the importance of considering these factors when selecting a text-to-image model for specific applications. Ultimately, the choice of model depends on the desired balance between image quality, computational resources, and real-time generation requirements.
 
 %\bibliographystyle{plain}
 %\bibliography{saltiniai}
