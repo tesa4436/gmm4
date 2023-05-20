@@ -136,10 +136,48 @@ Above mentioned points greatly increase availability to fine-tuning Stable Diffu
 %\label{tab1}
 %\end{center}
 %\end{table}
+\begin{figure}
+\centerline{\includegraphics[scale=0.30]{yoda1.png}}
+\caption{Yoda generated after regular fine-tuning}
+\label{yoda1}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[scale=0.30]{yoda2.png}}
+\caption{Yoda generated after regular fine-tuning}
+\label{yoda2}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[scale=0.30]{yoda3.png}}
+\caption{Yoda generated after regular fine-tuning}
+\label{yoda3}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[scale=0.30]{lora1.png}}
+\caption{Yoda generated after LoRA fine-tuning}
+\label{lora1}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[scale=0.30]{lora2.png}}
+\caption{Yoda generated after LoRA fine-tuning}
+\label{lora2}
+\end{figure}
+
+\begin{figure}
+\centerline{\includegraphics[scale=0.30]{lora3.png}}
+\caption{Yoda generated after LoRA fine-tuning}
+\label{lora3}
+\end{figure}
+
 
 \section{Results}
 Evaluating the results of text-to-image generation is inherently subjective, as the perception of image quality and relevance varies among individuals. However, while judging the generated images is subjective, we can objectively compare the results based on the sizes of generated models, the time it takes to train them, and the time it takes to generate images. These objective metrics provide valuable insights into the computational requirements and efficiency of the models, allowing for a comparative analysis of their performance.
 In the case of Stable Diffusion (SD), the sizes of the weights for the utilized architectures are as follows: UNet with 3.3G and VAE with 320M. These weights indicate the model's complexity and the amount of information it needs to process during training and generation. Additionally, the training process for Stable Diffusion takes approximately 15 minutes (using the parameters described above), while generating images with Stable Diffusion requires around 50 seconds.
+
+In figures \ref{yoda1}, \ref{yoda2} and \ref{yoda3} we can see that the after regular fine-tuning these samples have a noticeable comic book style due to the dataset's comic book style. While figures \ref{lora1}, \ref{lora2} and \ref{lora3}, which were generated after LoRA fine-tuning have a more real life style. One of the reasons why this is the case can be the fact that during regular fine-tuning all weights are adjusted, while during LoRA the Stable Diffusion model itself is not trained, instead the injected layers are. Other reasons remain to be explored.
 
 On the other hand, for the LoRA approach, the weights have a size of 3.2M, indicating a comparatively smaller model architecture. The training time for LoRA amounts to approximately 8 minutes, and the image generation time is reduced to around 20 seconds.
 These results provide insights into the computational requirements and efficiency of the models. Stable Diffusion, with its larger weight sizes and longer training time, offers a higher level of complexity and potential for generating detailed and contextually coherent images. However, it comes at the cost of increased training and generation time. Conversely, the LoRA approach, with its smaller weight size and shorter training and generation times, provides a more efficient solution while still delivering satisfactory image generation results.
